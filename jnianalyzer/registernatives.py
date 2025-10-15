@@ -1,6 +1,6 @@
 from binaryninja.plugin import BackgroundTaskThread
 from binaryninja.enums import MediumLevelILOperation
-from binaryninja.binaryview import StructuredDataView
+from binaryninja.binaryview import TypedDataAccessor
 from binaryninja.interaction import get_open_filename_input
 from binaryninja.types import Type, Symbol
 from binaryninja.log import log_info
@@ -33,7 +33,7 @@ def set_registernatives(
     # Set function signature
     for i in range(0, methods_count):
         ptr = methods_ptr + (i * t_size)
-        data = StructuredDataView(bv, "JNINativeMethod", ptr)
+        data = TypedDataAccessor(bv, "JNINativeMethod", ptr)
 
         method_name = str(bv.get_ascii_string_at(data.name.int, 1))
         fn_ptr = data.fnPtr.int
